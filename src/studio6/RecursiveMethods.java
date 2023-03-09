@@ -1,5 +1,7 @@
 package studio6;
 
+import java.lang.reflect.Array;
+
 import edu.princeton.cs.introcs.StdDraw;
 
 public class RecursiveMethods {
@@ -14,8 +16,12 @@ public class RecursiveMethods {
 	public static double geometricSum(int n) {
 		
 			// FIXME compute the geometric sum for the first n terms recursively
-			return 0;
-		
+			if(n == 0) { 
+				return 0;
+			}
+			else {
+				return Math.pow(0.5, n) + geometricSum(n-1);
+			}
 	}
 
 	/**
@@ -29,8 +35,16 @@ public class RecursiveMethods {
 	public static int gcd(int p, int q) {
 		
 			// FIXME compute the gcd of p and q using recursion
-			return 0;
-		
+			if((p % q) == 0) {
+				return q;	
+			}
+			else {
+				int temp = q;
+				q = p % q;
+				p = temp;
+				return gcd(p, q);
+			}
+			
 	}
 
 	
@@ -44,10 +58,28 @@ public class RecursiveMethods {
 	public static int[] toReversed(int[] array) {
 		
 			// FIXME create a helper method that can recursively reverse the given array
+		int[] reversed = new int[array.length];
+		return helper(reversed, 0, array);
+	}
+	public static int[] helper(int[] reversed, int index, int[] array) {
+		if(index > (reversed.length / 2)) {
+			return reversed;
+		}
+		else if(array.length == 0) {
 			return new int[0];
+		}
+		else {
+			int lastIndex = reversed.length - 1;
+			int mirrorIndex = lastIndex - index;
+			reversed[index] = array[mirrorIndex];
+			reversed[mirrorIndex] = array[index];
+			return helper(reversed, index + 1, array);
+		}
 		
 	}
-
+	
+	
+	
 	/**
 	 * @param xCenter                       x-coordinate of the center of the circle
 	 *                                      at the current depth
